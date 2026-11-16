@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="am">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ethiopia Lucky Demo</title>
+<style>
+body{font-family:Arial,sans-serif;background:#101827;color:white;margin:0;padding:20px;text-align:center}
+h1{color:#38bdf8}
+.card{background:#1e293b;padding:18px;border-radius:14px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ticket{background:#334155;color:white;border:2px solid #64748b;border-radius:10px;padding:15px 5px;font-size:17px}
+.ticket.selected{border-color:#38bdf8;background:#075985}
+button{cursor:pointer}
+.action{background:#0ea5e9;color:white;border:0;border-radius:10px;padding:14px;width:100%;font-size:17px;margin-top:15px}
+.small{color:#cbd5e1;font-size:14px}
+</style>
+</head>
+<body>
+<h1>🇪🇹 Ethiopia Lucky</h1>
+<p>የእጣ ቁጥር ይምረጡ</p>
+
+<div class="card">
+<h3>የሙከራ ቲኬቶች</h3>
+<p class="small">ቁጥር ይምረጡ፤ ዋጋውንም ይመልከቱ።</p>
+<div class="grid" id="tickets"></div>
+</div>
+
+<div class="card">
+<h3>የመረጡት ቲኬት</h3>
+<p id="chosen">ገና አልመረጡም</p>
+<p id="price">ዋጋ፦ 0 ብር</p>
+<button class="action" onclick="confirmTicket()">ምርጫዬን አረጋግጥ</button>
+<p id="message" class="small"></p>
+</div>
+
+<p class="small">ይህ የሙከራ ሲስተም ነው። እውነተኛ ክፍያ አይቀበልም።</p>
+
+<script>
+const data = [
+["0001",10],["0002",20],["0003",30],
+["0004",50],["0005",100],["0006",200]
+];
+let selected = null;
+
+const area = document.getElementById("tickets");
+
+data.forEach(item => {
+  const b = document.createElement("button");
+  b.className = "ticket";
+  b.innerHTML = item[0] + "<br>" + item[1] + " ብር";
+  b.onclick = () => {
+    selected = item;
+    document.querySelectorAll(".ticket").forEach(x => x.classList.remove("selected"));
+    b.classList.add("selected");
+    document.getElementById("chosen").textContent = "ቁጥር፦ " + item[0];
+    document.getElementById("price").textContent = "ዋጋ፦ " + item[1] + " ብር";
+    document.getElementById("message").textContent = "";
+  };
+  area.appendChild(b);
+});
+
+function confirmTicket(){
+  const msg = document.getElementById("message");
+  if(!selected){
+    msg.textContent = "እባክዎ ቲኬት ይምረጡ።";
+    return;
+  }
+  msg.textContent = "የሙከራ ምርጫ፦ " + selected[0] + "። እውነተኛ ቦታ አልተያዘም።";
+}
+</script>
+</body>
+</html>
